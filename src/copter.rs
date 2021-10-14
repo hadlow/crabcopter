@@ -1,6 +1,6 @@
 pub struct Copter
 {
-    pub position: i16,
+    pub position: u16,
 }
 
 impl Copter
@@ -13,7 +13,12 @@ impl Copter
         }
     }
 
-    pub fn print(&self)
+    pub fn update(&self)
+    {
+
+    }
+
+    pub fn render(&self)
     {
         println!("########");
         println!("########");

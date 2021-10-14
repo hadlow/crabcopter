@@ -1,0 +1,59 @@
+use std::time::{SystemTime};
+
+use crate::copter;
+
+pub struct Game
+{
+    pub clock: SystemTime,
+    pub now: SystemTime,
+    pub helicopter: copter::Copter,
+}
+
+impl Game
+{
+    pub fn new() -> Self
+    {
+        let clock: SystemTime = SystemTime::now();
+        let helicopter: copter::Copter = copter::Copter::new();
+
+        Self
+        {
+            clock: clock,
+            now: clock,
+            helicopter: helicopter,
+        }
+    }
+
+    pub fn start(&mut self)
+    {
+        loop
+        {
+            self.update();
+            self.render();
+        }
+    }
+
+    pub fn update(&self)
+    {
+        self.helicopter.update();
+    }
+
+    pub fn render(&mut self)
+    {
+        clearscreen::clear().unwrap();
+
+        let throttle: f64 = 1000.0 / 1.0;
+        let u_clock: f64 = self.clock.elapsed().unwrap().as_millis() as f64;
+        let u_now: f64 = self.now.elapsed().unwrap().as_millis() as f64;
+
+        println!("{}", self.clock.elapsed().unwrap().as_millis());
+
+        if u_now >= throttle
+        {
+            self.now = SystemTime::now();
+            println!("{}", self.now.elapsed().unwrap().as_millis());
+        }
+
+        self.helicopter.render();
+    }
+}
