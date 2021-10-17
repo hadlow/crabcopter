@@ -15,9 +15,9 @@ impl Game
 {
     pub fn new() -> Self
     {
-        let fps: f32 = 1.;
+        let fps: f32 = 2.;
         let clock = time::Instant::now();
-        let skip: f32 = (1. / fps as f32) * 1_000_000_000.;
+        let skip: f32 = (1000. / fps as f32);
         let canvas: canvas::Canvas = canvas::Canvas::new();
         let objects: Vec<Box<dyn object::Object>> = vec![Box::new(copter::Copter::new())];
 
@@ -50,13 +50,11 @@ impl Game
     pub fn render(&mut self)
     {
         let t = self.clock.elapsed();
-        let total_skip = t.as_secs() * 1_000 + t.subsec_nanos() as u64;
-        let diff = self.skip - (total_skip as f32);
 
-        if diff > 0.
+        if t.as_millis() >= self.skip as u128
         {
-            self.canvas.render(&self.objects);
             self.canvas.clear();
+            self.canvas.render(&self.objects);
             self.clock = time::Instant::now();
         }
     }

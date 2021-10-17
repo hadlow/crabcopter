@@ -4,8 +4,8 @@ use crate::object;
 
 pub struct Canvas
 {
-    width: u16,
-    height: u16,
+    width: usize,
+    height: usize,
 }
 
 impl Canvas
@@ -17,8 +17,8 @@ impl Canvas
         if let Some((Width(width), Height(height))) = size {
             return Self
             {
-                width: width,
-                height: height,
+                width: width.into(),
+                height: height.into(),
             };
         }
 
@@ -31,13 +31,11 @@ impl Canvas
 
     pub fn render(&self, objects: &Vec<Box<dyn object::Object>>)
     {
-        let mut buffer: Vec<Vec<char>> = vec![
-            vec!['h', 'e', 'l', 'l', 'o', ' ', 'w', 'o', 'r', 'l', 'd',],
-        ];
+        let mut buffer: Vec<Vec<char>> = vec![vec![' '; self.width]; self.height];
 
         for object in objects
         {
-            object.get_position_x();
+            buffer[object.get_position_y()][object.get_position_x()] = '1';
         }
 
         for row in buffer.iter()

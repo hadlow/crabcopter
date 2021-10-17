@@ -2,19 +2,19 @@ use crate::object;
 
 pub struct Copter
 {
-    position_x: u16,
-    position_y: u16,
+    position_x: usize,
+    position_y: usize,
     sprite: Vec<Vec<char>>,
 }
 
 impl object::Object for Copter
 {
-    fn get_position_x(&self) -> u16
+    fn get_position_x(&self) -> usize
     {
         self.position_x
     }
 
-    fn get_position_y(&self) -> u16
+    fn get_position_y(&self) -> usize
     {
         self.position_y
     }
