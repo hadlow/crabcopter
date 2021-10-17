@@ -7,3 +7,4 @@ edition = "2018"
 
 [dependencies]
 clearscreen = "1.0.7"
+terminal_size = "0.1.17"

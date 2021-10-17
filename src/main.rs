@@ -1,4 +1,7 @@
 mod game;
+mod canvas;
+mod object;
+mod wall;
 mod copter;
 
 fn main()

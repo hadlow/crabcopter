@@ -1,12 +1,14 @@
 use std::time;
-
+use crate::object;
 use crate::copter;
+use crate::canvas;
 
 pub struct Game
 {
-    pub clock: time::Instant,
-    pub skip: f32,
-    pub helicopter: copter::Copter,
+    clock: time::Instant,
+    skip: f32,
+    canvas: canvas::Canvas,
+    objects: Vec<Box<dyn object::Object>>,
 }
 
 impl Game
@@ -16,13 +18,15 @@ impl Game
         let fps: f32 = 1.;
         let clock = time::Instant::now();
         let skip: f32 = (1. / fps as f32) * 1_000_000_000.;
-        let helicopter: copter::Copter = copter::Copter::new();
+        let canvas: canvas::Canvas = canvas::Canvas::new();
+        let objects: Vec<Box<dyn object::Object>> = vec![Box::new(copter::Copter::new())];
 
         Self
         {
             clock: clock,
             skip: skip,
-            helicopter: helicopter,
+            canvas: canvas,
+            objects: objects,
         }
     }
 
@@ -37,7 +41,10 @@ impl Game
 
     pub fn update(&self)
     {
-        self.helicopter.update();
+        for object in &self.objects
+        {
+            object.update();
+        }
     }
 
     pub fn render(&mut self)
@@ -48,11 +55,8 @@ impl Game
 
         if diff > 0.
         {
-            println!("{}", total_skip);
-
-            self.helicopter.render();
-            clearscreen::clear().unwrap();
-
+            self.canvas.render(&self.objects);
+            self.canvas.clear();
             self.clock = time::Instant::now();
         }
     }

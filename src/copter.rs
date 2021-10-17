@@ -1,6 +1,33 @@
+use crate::object;
+
 pub struct Copter
 {
-    pub position: u16,
+    position_x: u16,
+    position_y: u16,
+    sprite: Vec<Vec<char>>,
+}
+
+impl object::Object for Copter
+{
+    fn get_position_x(&self) -> u16
+    {
+        self.position_x
+    }
+
+    fn get_position_y(&self) -> u16
+    {
+        self.position_y
+    }
+
+    fn get_sprite(&self) -> Vec<Vec<char>>
+    {
+        self.sprite
+    }
+
+    fn update(&self)
+    {
+
+    }
 }
 
 impl Copter
@@ -9,20 +36,24 @@ impl Copter
     {
         Self
         {
-            position: 5,
+            position_x: 25,
+            position_y: 15,
+            sprite: Copter::make_sprite(),
         }
     }
 
-    pub fn update(&self)
+    fn make_sprite() -> Vec<Vec<char>>
     {
+        //_________
+        //  ,-'-.____()
+        // (____.--"""
+        // -'--'-
 
-    }
-
-    pub fn render(&self)
-    {
-        println!("########");
-        println!("########");
-        println!("########");
-        println!("########");
+        vec![
+            vec![' ', ' ', ' ', '_', '_', '_', '_', '_', '_', '_', '_', '_'],
+            vec!['(', ')', '_', '_', '_', '_', ',', '-', '\'', '-', '.', ' '],
+            vec![' ', '"', '"', '"', '-', '-', '.', '_', '_', '_', '_', ')'],
+            vec![' ', ' ', ' ', ' ', ' ', ' ', '-', '\'', '-', '-', '\'', '-'],
+        ]
     }
 }
