@@ -24,7 +24,7 @@ impl object::Object for Copter
         &self.sprite
     }
 
-    fn update(&self)
+    fn update(&mut self)
     {
 
     }

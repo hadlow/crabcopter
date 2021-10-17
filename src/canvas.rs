@@ -35,7 +35,6 @@ impl Canvas
 
         for object in objects
         {
-            buffer[object.get_position_y()][object.get_position_x()] = '1';
             for (r_index, row) in object.get_sprite().iter().enumerate()
             {
                 for (c_index, column) in row.iter().enumerate()

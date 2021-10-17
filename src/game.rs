@@ -6,8 +6,10 @@ use crate::canvas;
 
 pub struct Game
 {
-    clock: time::Instant,
-    skip: f32,
+    render_clock: time::Instant,
+    update_clock: time::Instant,
+    render_skip: f32,
+    update_skip: f32,
     canvas: canvas::Canvas,
     objects: Vec<Box<dyn object::Object>>,
 }
@@ -16,9 +18,10 @@ impl Game
 {
     pub fn new() -> Self
     {
-        let fps: f32 = 2.;
-        let clock = time::Instant::now();
-        let skip: f32 = (1000. / fps as f32);
+        let render_clock = time::Instant::now();
+        let update_clock = time::Instant::now();
+        let render_skip: f32 = 1000. / 10. as f32;
+        let update_skip: f32 = 1000. / 10. as f32;
         let canvas: canvas::Canvas = canvas::Canvas::new();
         let mut objects: Vec<Box<dyn object::Object>> = vec![];
 
@@ -27,8 +30,10 @@ impl Game
 
         Self
         {
-            clock: clock,
-            skip: skip,
+            render_clock: render_clock,
+            update_clock: update_clock,
+            render_skip: render_skip,
+            update_skip: update_skip,
             canvas: canvas,
             objects: objects,
         }
@@ -43,23 +48,26 @@ impl Game
         }
     }
 
-    pub fn update(&self)
+    fn update(&mut self)
     {
-        for object in &self.objects
+        if self.update_clock.elapsed().as_millis() >= self.update_skip as u128
         {
-            object.update();
+            for object in self.objects.iter_mut()
+            {
+                object.update();
+            }
+
+            self.update_clock = time::Instant::now();
         }
     }
 
-    pub fn render(&mut self)
+    fn render(&mut self)
     {
-        let t = self.clock.elapsed();
-
-        if t.as_millis() >= self.skip as u128
+        if self.render_clock.elapsed().as_millis() >= self.render_skip as u128
         {
             self.canvas.clear();
             self.canvas.render(&self.objects);
-            self.clock = time::Instant::now();
+            self.render_clock = time::Instant::now();
         }
     }
 }

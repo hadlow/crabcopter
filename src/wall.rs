@@ -24,9 +24,9 @@ impl object::Object for Wall
         &self.sprite
     }
 
-    fn update(&self)
+    fn update(&mut self)
     {
-
+        self.position_x = self.position_x + 1;
     }
 }
 
