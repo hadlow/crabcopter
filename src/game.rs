@@ -1,6 +1,7 @@
 use std::time;
 use crate::object;
 use crate::copter;
+use crate::wall;
 use crate::canvas;
 
 pub struct Game
@@ -19,7 +20,10 @@ impl Game
         let clock = time::Instant::now();
         let skip: f32 = (1000. / fps as f32);
         let canvas: canvas::Canvas = canvas::Canvas::new();
-        let objects: Vec<Box<dyn object::Object>> = vec![Box::new(copter::Copter::new())];
+        let mut objects: Vec<Box<dyn object::Object>> = vec![];
+
+        objects.push(Box::new(copter::Copter::new()));
+        objects.push(Box::new(wall::Wall::new()));
 
         Self
         {
