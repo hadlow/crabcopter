@@ -19,7 +19,7 @@ impl object::Object for Wall
         self.position_y
     }
 
-    fn get_sprite(&self) -> Vec<Vec<char>>
+    fn get_sprite(&self) -> &Vec<Vec<char>>
     {
         &self.sprite
     }

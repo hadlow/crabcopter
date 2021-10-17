@@ -19,9 +19,9 @@ impl object::Object for Copter
         self.position_y
     }
 
-    fn get_sprite(&self) -> Vec<Vec<char>>
+    fn get_sprite(&self) -> &Vec<Vec<char>>
     {
-        self.sprite
+        &self.sprite
     }
 
     fn update(&self)

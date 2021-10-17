@@ -32,7 +32,12 @@ impl Canvas
 
     pub fn render(&self, objects: &Vec<Box<dyn object::Object>>)
     {
-        
+        let mut buffer = [[char; self.height]; self.width];
+
+        for object in objects
+        {
+            
+        }
     }
 
     pub fn clear(&self)
